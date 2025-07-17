@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Plataforma {
+  id     Int    @id @default(autoincrement())
+  nome   String
+  jogos  Jogo[]
+}
+
+model Genero {
+  id     Int    @id @default(autoincrement())
+  nome   String
+  jogos  Jogo[]
+}
+
+model Jogo {
+  id           Int        @id @default(autoincrement())
+  nome         String
+  plataformaId Int
+  generoId     Int
+  plataforma   Plataforma @relation(fields: [plataformaId], references: [id])
+  genero       Genero     @relation(fields: [generoId], references: [id])
+}
